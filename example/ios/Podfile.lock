@@ -1,0 +1,40 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_audio_crash (0.0.1):
+    - Flutter
+  - flutter_c_ptr (0.0.1):
+    - Flutter
+  - flutter_smarsu_package (0.0.1):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_audio_crash (from `.symlinks/plugins/flutter_audio_crash/ios`)
+  - flutter_c_ptr (from `.symlinks/plugins/flutter_c_ptr/ios`)
+  - flutter_smarsu_package (from `.symlinks/plugins/flutter_smarsu_package/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_audio_crash:
+    :path: ".symlinks/plugins/flutter_audio_crash/ios"
+  flutter_c_ptr:
+    :path: ".symlinks/plugins/flutter_c_ptr/ios"
+  flutter_smarsu_package:
+    :path: ".symlinks/plugins/flutter_smarsu_package/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_audio_crash: 15bb2259098a66c66843fd6d18712adfbd8dae00
+  flutter_c_ptr: 7b74ce7c07bccc67b5bc331c521ebbd0e443ed82
+  flutter_smarsu_package: 14b41044b4cdbb55b3e59a4a1c5416dec660415c
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.0.beta.2
