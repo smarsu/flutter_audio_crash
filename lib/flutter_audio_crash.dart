@@ -198,8 +198,8 @@ List<int> editPass(String groudTruth, String predict) {
   Int32P p1 = Int32P.fromList(ids1);
   Int32P p2 = Int32P.fromList(ids2);
   Int32P res = Int32P();
-  
-  res.resize(2 * (groudTruth.length + predict.length));
+
+  res.resize(3 * (groudTruth.length + predict.length));
   int size = editPassFfi(p1.address, p1.length, p2.address, p2.length, res.address);
   List<int> resList = res.list;
   List<int> pass = List<int>(size);
