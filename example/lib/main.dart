@@ -56,6 +56,8 @@ class _MyAppState extends State<MyApp> {
 
       await AudioConvert.sentenceSimilarityAsync("我是范峰源", "我是岱宗");
 
+      await AudioConvert.editPassAsync("我是范峰源", "我是岱宗");
+
       // await AudioConvert.toThumbnailAsync(min16, [0, 300], outputs: [output10, output11]);
     }
   }

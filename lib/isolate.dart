@@ -82,6 +82,14 @@ class AudioConvert {
     return await receivePort.first;
   }
 
+  static Future<List<int>> editPassAsync(String groundTrue, String predict) async {
+    await initialized;
+
+    ReceivePort receivePort = ReceivePort();
+    _sendPort.send([receivePort.sendPort, 'editPass', groundTrue, predict]);
+    return await receivePort.first;
+  }
+
   /* Private */
   static SendPort _sendPort;
   static Future<void> _init() async {
@@ -129,6 +137,10 @@ class AudioConvert {
       }
       else if (mod == 'sentenceSimilarity') {
         double result = sentenceSimilarity(msg[2], msg[3]);
+        callbackPort.send(result);
+      }
+      else if (mod == 'editPass') {
+        List<int> result = editPass(msg[2], msg[3]);
         callbackPort.send(result);
       }
     }

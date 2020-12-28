@@ -38,6 +38,11 @@ final int Function(int, int, int, int, int, int, double) videoThumbnailFfi =
         .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64, Int32, Int32, Int32, Double)>>("to_thumbnail")
         .asFunction();
 
+final int Function(int, int, int, int, int) editPassFfi = 
+    lib
+        .lookup<NativeFunction<Int32 Function(Int64, Int32, Int64, Int32, Int64)>>("the_edit_pass")
+        .asFunction();
+
 String toM4A(String input, String output) {
   Int8P inputFfi = Int8P.fromString(input);
   Int8P outputFfi = Int8P.fromString(output);
@@ -159,4 +164,51 @@ List<String> toThumbnail(String input, List<double> timesInMs, List<String> outp
 
   print('In toThumbnail, ok ... $ok');
   return outputs;
+}
+
+List<int> editPass(String groudTruth, String predict) {
+  Map<String, int> idMap = {};
+  int id = 0;
+  for (int idx = 0; idx < groudTruth.length; ++idx) {
+    String char = groudTruth[idx];
+    if (!idMap.containsKey(char)) {
+      // Not Found
+      idMap[char] = ++id;
+    }
+  }
+
+  for (int idx = 0; idx < predict.length; ++idx) {
+    String char = predict[idx];
+    if (!idMap.containsKey(char)) {
+      // Not Found
+      idMap[char] = ++id;
+    }
+  }
+
+  List<int> ids1 = [];
+  for (int idx = 0; idx < groudTruth.length; ++idx) {
+    ids1.add(idMap[groudTruth[idx]]);
+  }
+
+  List<int> ids2 = [];
+  for (int idx = 0; idx < predict.length; ++idx) {
+    ids2.add(idMap[predict[idx]]);
+  }
+
+  Int32P p1 = Int32P.fromList(ids1);
+  Int32P p2 = Int32P.fromList(ids2);
+  Int32P res = Int32P();
+  
+  res.resize(2 * (groudTruth.length + predict.length));
+  int size = editPassFfi(p1.address, p1.length, p2.address, p2.length, res.address);
+  List<int> resList = res.list;
+  List<int> pass = List<int>(size);
+  pass.setAll(0, resList.sublist(0, size));
+
+  p1.dispose();
+  p2.dispose();
+  res.dispose();
+
+  print("In EditPass size ... $size");
+  return pass;
 }
