@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_crash/flutter_audio_crash.dart';
 import 'package:flutter_audio_crash/isolate.dart';
 
 import 'package:flutter_smarsu_package/flutter_smarsu_package.dart';
@@ -14,6 +15,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+
+  /// pos 为当前时间戳(ms), size为audio总时长(ms)
+  String func = 
+"""
+double main(double pos, double size) {
+  if (pos < 0.3 * size) {
+    return 0.5;
+  }
+  else if (pos < 0.7 * size) {
+    return 1;
+  }
+  else {
+    return 0.5;
+  }
+}
+""";
 
   @override
   void initState() {
@@ -35,8 +52,9 @@ class _MyAppState extends State<MyApp> {
     String output7 = await getApplicationDocumentsPath(filename: 'tian_convert');
     String output8 = await getApplicationDocumentsPath(filename: 'tian_volume');
     String output9 = await getApplicationDocumentsPath(filename: 'tian_cut');
-    // String output10 = await getApplicationDocumentsPath(filename: '10');
-    // String output11 = await getApplicationDocumentsPath(filename: '11');
+    String output10 = await getApplicationDocumentsPath(filename: 'cat_gradient');
+    String output11 = await getApplicationDocumentsPath(filename: 'seeyou_gradient');
+    String output12 = await getApplicationDocumentsPath(filename: 'tian_gradient');
     while (true) {
       await AudioConvert.toM4AAsync(cat, output: output1);
       await AudioConvert.toM4AAsync(seeyou, output: output2);
@@ -59,6 +77,10 @@ class _MyAppState extends State<MyApp> {
       await AudioConvert.editPassAsync("我是范峰源", "我是岱宗");
 
       // await AudioConvert.toThumbnailAsync(min16, [0, 300], outputs: [output10, output11]);
+      print('$func');
+      await AudioConvert.toGradientAsync(cat, func, output: output10);
+      await AudioConvert.toGradientAsync(seeyou, func, output: output11);
+      await AudioConvert.toGradientAsync(tian, func, output: output12);
     }
   }
 

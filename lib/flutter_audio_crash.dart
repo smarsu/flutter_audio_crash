@@ -8,6 +8,8 @@ final DynamicLibrary lib = Platform.isAndroid
     ? DynamicLibrary.open("libaudio_crash.so")
     : DynamicLibrary.open("libaudio_crash.dylib");
 
+typedef nativeFuncFloatInt32Int32 = Float Function(Int32, Int32);
+
 final int Function(int, int) audioConvertFfi = 
     lib
         .lookup<NativeFunction<Int32 Function(Int64, Int64)>>("audio_convert")
@@ -41,6 +43,16 @@ final int Function(int, int, int, int, int, int, double) videoThumbnailFfi =
 final int Function(int, int, int, int, int) editPassFfi = 
     lib
         .lookup<NativeFunction<Int32 Function(Int64, Int32, Int64, Int32, Int64)>>("the_edit_pass")
+        .asFunction();
+
+// final int Function(int, int, Pointer<NativeFunction<nativeFuncFloatInt32Int32>>) audioGradientFfi = 
+//     lib
+//         .lookup<NativeFunction<Int32 Function(Int64, Int64, Pointer<NativeFunction<nativeFuncFloatInt32Int32>>)>>("audio_gradient")
+//         .asFunction();
+
+final int Function(int, int, int) audioGradientFfi = 
+    lib
+        .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64)>>("audio_gradient")
         .asFunction();
 
 String toM4A(String input, String output) {
@@ -211,4 +223,22 @@ List<int> editPass(String groudTruth, String predict) {
 
   print("In EditPass size ... $size");
   return pass;
+}
+
+String toGradient(String input, String func, String output) {
+  Int8P inputFfi = Int8P.fromString(input);
+  Int8P outputFfi = Int8P.fromString(output);
+  Int8P funcFfi = Int8P.fromString(func);
+  int ok = audioGradientFfi(inputFfi.address, outputFfi.address, funcFfi.address);
+  inputFfi?.dispose();
+  outputFfi?.dispose();
+  funcFfi?.dispose();
+  print("In AudioGradient ok ... $ok");
+
+  if (ok == 0) {
+    return output;
+  }
+  else {
+    return input;
+  }
 }

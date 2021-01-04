@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -90,6 +91,18 @@ class AudioConvert {
     return await receivePort.first;
   }
 
+  static Future<String> toGradientAsync(String input, String func, {String output, String extend='mp4'}) async {
+    await initialized;
+
+    if (output == null) {
+      output = await rootof(path: '${DateTime.now().microsecondsSinceEpoch}.$extend');
+    }
+
+    ReceivePort receivePort = ReceivePort();
+    _sendPort.send([receivePort.sendPort, 'toGradient', input, func, output]);
+    return await receivePort.first;
+  }
+
   /* Private */
   static SendPort _sendPort;
   static Future<void> _init() async {
@@ -141,6 +154,10 @@ class AudioConvert {
       }
       else if (mod == 'editPass') {
         List<int> result = editPass(msg[2], msg[3]);
+        callbackPort.send(result);
+      }
+      else if (mod == 'toGradient') {
+        String result = toGradient(msg[2], msg[3], msg[4]);
         callbackPort.send(result);
       }
     }

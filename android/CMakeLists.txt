@@ -18,5 +18,6 @@ target_link_libraries(
   libavutil.a
   libswresample.a
   libswscale.a
+  libsmcc_core.a
   -Wl,--no-whole-archive
 )
