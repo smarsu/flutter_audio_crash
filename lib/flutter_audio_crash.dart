@@ -6,53 +6,49 @@ import 'package:flutter_c_ptr/flutter_c_ptr.dart';
 
 final DynamicLibrary lib = Platform.isAndroid
     ? DynamicLibrary.open("libaudio_crash.so")
-    : DynamicLibrary.open("libaudio_crash.dylib");
+    // : DynamicLibrary.open("libaudio_crash.dylib");
+    : DynamicLibrary.process();
 
 typedef nativeFuncFloatInt32Int32 = Float Function(Int32, Int32);
 
 final int Function(int, int) audioConvertFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int64)>>("audio_convert")
+        .lookup<NativeFunction<Int32 Function(Int64, Int64)>>("_audio_convert")
         .asFunction();
 
 final int Function(int, int, double) audioVolumeFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int64, Double)>>("audio_volume")
+        .lookup<NativeFunction<Int32 Function(Int64, Int64, Double)>>("_audio_volume")
         .asFunction();
 
 final int Function(int) mediaDurationFfi = 
     lib
-        .lookup<NativeFunction<Int64 Function(Int64)>>("media_duration")
+        .lookup<NativeFunction<Int64 Function(Int64)>>("_media_duration")
         .asFunction();
 
 final int Function(int, int, double, double) audioCutFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int64, Double, Double)>>("audio_cut")
+        .lookup<NativeFunction<Int32 Function(Int64, Int64, Double, Double)>>("_audio_cut")
         .asFunction();
 
 final double Function(int, int, int, int) sentenceBleuFfi = 
     lib
-        .lookup<NativeFunction<Float Function(Int64, Int32, Int64, Int32)>>("sentence_bleu")
+        .lookup<NativeFunction<Float Function(Int64, Int32, Int64, Int32)>>("_sentence_bleu")
         .asFunction();
 
 final int Function(int, int, int, int, int, int, double) videoThumbnailFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64, Int32, Int32, Int32, Double)>>("to_thumbnail")
+        .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64, Int32, Int32, Int32, Double)>>("_to_thumbnail")
         .asFunction();
 
 final int Function(int, int, int, int, int) editPassFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int32, Int64, Int32, Int64)>>("the_edit_pass")
+        .lookup<NativeFunction<Int32 Function(Int64, Int32, Int64, Int32, Int64)>>("_the_edit_pass")
         .asFunction();
-
-// final int Function(int, int, Pointer<NativeFunction<nativeFuncFloatInt32Int32>>) audioGradientFfi = 
-//     lib
-//         .lookup<NativeFunction<Int32 Function(Int64, Int64, Pointer<NativeFunction<nativeFuncFloatInt32Int32>>)>>("audio_gradient")
-//         .asFunction();
 
 final int Function(int, int, int) audioGradientFfi = 
     lib
-        .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64)>>("audio_gradient")
+        .lookup<NativeFunction<Int32 Function(Int64, Int64, Int64)>>("_audio_gradient")
         .asFunction();
 
 String toM4A(String input, String output) {
