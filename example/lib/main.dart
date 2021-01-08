@@ -21,13 +21,13 @@ class _MyAppState extends State<MyApp> {
 """
 double main(double pos, double size) {
   if (pos < 0.3 * size) {
-    return 0.5;
+    return sqrt(0.5);
   }
   else if (pos < 0.7 * size) {
-    return 1;
+    return sin(1);
   }
   else {
-    return 0.5;
+    return pow(0.5, 2);
   }
 }
 """;
