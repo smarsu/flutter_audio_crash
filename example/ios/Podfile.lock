@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_audio_crash: 77463dcceb3cc9b4d7181409bd3021ad3eb52e77
+  flutter_audio_crash: ee947fef0bce94f17ae5cca9b18b825614245b4e
   flutter_c_ptr: 7b74ce7c07bccc67b5bc331c521ebbd0e443ed82
   flutter_smarsu_package: 14b41044b4cdbb55b3e59a4a1c5416dec660415c
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
